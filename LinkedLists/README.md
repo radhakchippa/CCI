@@ -5,9 +5,7 @@
      - A Linked list is a sequential list of nodes that hold
        data which point to other nodes also containing data.
 
-       node  -->   node  -->  node  -->  node  -->  node
-
-       data1       data2      data3      data4      data5
+       node  -->   node  -->  node  -->  node  -->  node  --> null
        
    - Where are Linked Lists used ?
    - Terminology
