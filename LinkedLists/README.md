@@ -31,6 +31,17 @@
 
 2. Implementation Details
    - How to insert new elements
+     - Have a traversal pointer to maintain current node and previous node for Singly linked lists. 
+     - Create a new node and link this new node to previous node and link the new node to the current node for insertion.
+     - For a doubly Linked list, maintain single traversal pointer to maintain current node.
+     - Create a new node and link this new node to current nodes previous pointer and link the new node next pointer to current node, Now link the previous node's next pointer to new node and current node's previous pointer to new node.
    - How to remove elements
 3. Complexity analysis
+
+    |type|singly linked list|doubly linked list|
+    |----|------------------|------------------|
+    |Insert/delete at head|O(1)|O(1)|
+    |Insert/delete at tail|O(n)|O(1)|
+    |Insert/delete in middle|O(n)|O(n)|
+
 4. Code Implementation in Java.
