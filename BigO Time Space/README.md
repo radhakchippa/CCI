@@ -29,10 +29,12 @@ Big O, big omega and big theta describe the upper, lower and tight bounds for th
         then, do next step 
         for(...M times) {.... all done second step..} ``` 
         Big O will be sum of both steps. as O(N + M).
-  - **Multiply** If your algorithm is in the form "do this for each time you do that" then you multiple the runtimes.
+        
+   - **Multiply** If your algorithm is in the form "do this for each time you do that" then you multiple the runtimes.
         ``` for(....N times) {
             for(...M times) { for each time in N, we do M times this work } ``` 
         Big O will be Multiply both steps, as O(N * M ).
+        
 4. Amortized Time
    - An arrayList is implemented with an array. When the array hits capacity, the ArrayList class will create a new array with double the capacity and copy all the elements over to the new array. How do you describe the runtime of insertion?
    - The array could be full. if the array contains N elements, then inserting a new element will take O(N) time. You will have to create a new array of size 2N and then copy N elements over. This insertion will take O(N) time.
@@ -48,4 +50,33 @@ Big O, big omega and big theta describe the upper, lower and tight bounds for th
    - **HINT: if you are cutting the problem set in half each time, then your Time complexity will be in the O(log N).**
    - **_What's the base of the log?  That's an excellent question!  The short answer is that it doesn't matter for the purposes of big O._**
 
-6. Recursive Runtimes **Tricky Business**
+6. Recursive Runtimes **Always Tricky, need to be careful otherwise they bite you in the Back**
+   - When you have a recursive function that makes multiple calls, the runtime will oftern **(but not always)** look like )(branches^depth), where branches is the number of times ech recursive call branches. For example consider below code.
+   ```
+      int f(int n){     
+         if(n <=1)
+            return 1;
+            
+         return f(n-1) + f(n-1);    
+         // Number of branches each recursive call branches.. in this example it is _2_
+         // depth is number of times recursive call is made... in this example it is ~n.
+         // So Time complexity BigO = O(2 ^ N).
+         // The Space complexity of this algorith will be O(N). Althought we have O(2^N) nodes in the tree total, only O(N) exist at any give time. Therefore, we would only need to have O(N) memory available.
+      }
+   ```
+   **_NOTE_**
+   **The base of the log doesn't matter for big O since logs of different bases are only different by a constant factory. However, this does not apply to exponents. The base of an exponent does matter.  Compare 2^n and 8^n.  If you expand 8^n, you get (2^3)^n, which equals 2^3n, which equals 2^2n * 2^n.  As you can see, 8^n and 2^n are different by a factor of 2^2n. That is very much not a constant factor!!**
+
+## GOTCHAS
+*Suppose we had an algorithm that took in an array of strings, sorted each string, and then sorted the full array. What would the runtime be ?*
+ - Most people will reason the following: Sorting each string is O(N log N) and we have to do this for each string, so that's O( N * N log N ).  We also have to sort this array, so that's an additional O(N log N ) work, Therefore, the total runtime os O(N^2 log N + N log N ) , which is just O ( N^2 log N). This is completely incorrect. The problem is that we used N in two different ways. In one case, it's the length of the string (which string ?). And in another case, it's the length of the array.
+ - You can prevent this type of errors y either not using the variable "N" at all, or by only using it when there is no **ambiguity** as to what N could represent.  
+ - In this runtime calcualtion, i will not even use a and b here, or m and n. It's too easy to forget which is which and mix them up. an O(a^2) runtime is completley different from and O(a*B) runtime.
+ - Let's define new terms -- and use names that are logical.
+   - Let 's' be the length of the longest string.
+   - Let 'a' be the length of the array.
+   - Now we can work through this in parts:
+   - Sorting each string is O(s log s).
+   - we have to do this for every string ( and there are 'a' strings), so that's O(a * s log s).
+   - **Now we have to sort all the strings. There are 'a' strings, so you all may be inclined to say that this takes O(a log a) time. This is what most people would say. _You should also take into account that you need to compare the strings. Each string comparison takes O(s) time. There are o(a log a ) comparisions,therefore this will take O(a * s log a) time._**
+   - Since these are two parts in the algorithm, Sorting all individual Strings first. And then Sorting the entire array second, we have to add the run times of these two parts, you get O(a * s log s) + O(s * a log a) = O(a * s log s) + O(a * s log a) = O(a * s (log s + log a)).
