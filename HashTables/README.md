@@ -21,6 +21,8 @@ If the number of collisions is very high, the worst case runtime is O( N), where
 However, we generally assume a good implementation that keeps collisions to a minimum, in which case
 the lookup time is a (1).
 
+![Hash Table example image](images/HashTable.JPG)
+
 Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an O( log N)
 lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We
 can also iterate through the keys in order, which can be useful sometimes.
