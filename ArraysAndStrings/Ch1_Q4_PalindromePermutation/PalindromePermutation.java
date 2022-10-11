@@ -41,6 +41,49 @@ public class PalindromePermutation {
         return true;
     }
 
+    //Use bitVector, assume a-z characters only  -- how many bits we have to set ? do you ask what is the character set ?
+    public static boolean isPermutationOfPalindrome(String phrase){
+        int bitVector = createBitVector(phrase);
+        return bitVector == 0 || checkExactlyOneBitSet(bitVector);
+    }
+    /*
+    Create a bit vector for the string, For each letter with value i, toggle the ith bit.
+     */
+    public static int createBitVector(String phrase){
+        int bitVector = 0;
+        for(char c: phrase.toCharArray()) {
+            int x = getCharNumber(c);
+            bitVector = toggle(bitVector, x);
+        }
+        return bitVector;
+    }
+    /*
+    Toggle the ith bit in the integer.
+     */
+    public static int toggle(int bitVector, int index){
+        if(index <0) return bitVector;
+        int mask = 1 << index;
+        if((bitVector & mask) == 0){
+            bitVector |= mask;
+        } else {
+            bitVector &= ~mask;
+        }
+        return bitVector;
+    }
+    // check that exactly one bit is set by subtracting one from the interger and
+    // AND'ing it with the original Integer.
+    /*
+    Picture an integer like 00010000. We could of course shift the integer repeatedly to check that there's only
+    a single 1. Alternatively, if we subtract 1 from the number, we'll get 00001111. What's notable about this
+    is that there is no overlap between the numbers (as opposed to say 00101000, which, when we subtract 1
+    from, we get 00100111.) So, we can check to see that a number has exactly one 1 because if we subtract 1
+    from it and then AND it with the new number, we should get 0.
+    00010000 - 1 = 00001111
+    00010000 & 00001111 = 0
+     */
+    public static boolean checkExactlyOneBitSet(int bitVector){
+        return (bitVector & (bitVector-1)) == 0;
+    }
 
     public static void main(String[] args) {
         System.out.println("Tact Coa" + checkPermutationOfPalindrome("Tact Coa "));
@@ -48,5 +91,9 @@ public class PalindromePermutation {
         System.out.println("this is three"+ checkPermutationOfPalindrome("this is three"));
         System.out.println(" "+checkPermutationOfPalindrome(" "));
         System.out.println(null + checkPermutationOfPalindrome(null));
+
+        System.out.println("Tact Coa" + isPermutationOfPalindrome("Tact Coa "));
+        System.out.println("This is Thee" + isPermutationOfPalindrome("This is Thee"));
+        System.out.println("this is three"+ isPermutationOfPalindrome("this is three"));
     }
 }
