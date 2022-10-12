@@ -55,5 +55,3 @@ imagine this: Suppose you have a kilometer-long walk to the store. You walk 0.5 
 and so on. You will never exceed one kilometer (although you'll get very close to it).
 Therefore, inserting N elements takes O(N) work total. Each insertion is 0(1) on average, even though
 some insertions take 0 (N) time in the worst case.
-
-# Index of Problems
