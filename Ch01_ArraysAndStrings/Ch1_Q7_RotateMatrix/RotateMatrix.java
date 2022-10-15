@@ -9,6 +9,8 @@
 
 public class RotateMatrix {
     public static int[][] rotateMatrix(int[][] matrix){
+        if(matrix == null || matrix.length==0 || matrix[0].length==0) throw new Exception("Matrix is empty");
+        if(matrix.length != matrix[0].length) throw new Exception("Invalid Input Exception");
         int size = matrix[0].length;
         for(int i=0;i<size/2;i++){
             for(int j=i;j<size-1-1;j++) {
@@ -19,6 +21,7 @@ public class RotateMatrix {
                 matrix[i][size-1-j] = temp;
             }
         }
+        return matrix;
     }
     // the rotation is done in layers like onion, outer most layer, then layer below it and so on.
     // so for a nxn matrix, there will be n/2 layers.
