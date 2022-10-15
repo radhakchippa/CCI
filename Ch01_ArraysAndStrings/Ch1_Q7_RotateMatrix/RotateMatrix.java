@@ -11,7 +11,7 @@ public class RotateMatrix {
     public static int[][] rotateMatrix(int[][] matrix){
         int size = matrix[0].length;
         for(int i=0;i<size/2;i++){
-            for(int j=0;j<size;j++) {
+            for(int j=i;j<size-1-1;j++) {
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[size-1-i][j];
                 matrix[size-1-i][j] = matrix[size-1-i][size-1-j];
@@ -19,13 +19,13 @@ public class RotateMatrix {
                 matrix[i][size-1-j] = temp;
             }
         }
-    }  // figure out an offset so swaps happen properly
-    // do on paper.
-    00 01 02 03      30 20 10 00
-    10 11 12 13      31
-    20 21 22 23
-    30 31 32 33
-
+    }
+    // the rotation is done in layers like onion, outer most layer, then layer below it and so on.
+    // so for a nxn matrix, there will be n/2 layers.
+    // in each layer we have to rotate arraysize-layer*2. eg: first layer: n-1-(0*2) since i=0,
+    // in layer 2 , we have to roate from 1,1 to 1n-2 which means n-1-(1*2) since i=1.
+    // since rotation is in place , space complexity is O(1) constant.
+    // time complexity is ( we are rotation all the nxn elements O(n^2)
 
 
     public static void main(String[] args) {
