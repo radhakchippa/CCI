@@ -13,7 +13,7 @@ public class RotateMatrix {
         if(matrix.length != matrix[0].length) throw new Exception("Invalid Input Exception");
         int size = matrix[0].length;
         for(int i=0;i<size/2;i++){
-            for(int j=i;j<size-1-1;j++) {
+            for(int j=i;j<(size-1-i);j++) {
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[size-1-i][j];
                 matrix[size-1-i][j] = matrix[size-1-i][size-1-j];
