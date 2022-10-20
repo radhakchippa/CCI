@@ -8,6 +8,8 @@ public class StringRotation {
         if(s1==null || s2 == null) return false;
         if(s1.length() != s2.length() ||
             s1.length()==0 || s2.length() ==0) return false;
+        //Do not concatenate using string = s1+s1 // very bad BigO, as string is immutable object.
+        // there is copying 2n times.
         StringBuffer sb = new StringBuffer(s1.length*2);
         sb.append(s1).append(s1);
         s1 = sb.toString();
