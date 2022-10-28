@@ -45,7 +45,41 @@ public class SumLists {
         return head;
     }
 
-    public static void main(String[] args) {
-
+    public static int nodesInLL(Node head){
+        int count = 0;
+        while(head!= null){
+            count++;
+            head = head.next;
+        }
+        return count;
     }
+
+    public static Node recursiveSum(Node n1, Node n2, carry){
+        int total =0, carry = 0;
+        Node sum;
+        if(n1.next == null && n2.next == null){
+            total = n1.value + n2.value;
+            carry = total /10;
+        }
+        sum = new Node( recursiveSum(n1, n2, carry) );
+        sum.next = new Node (recursiveSum(n1.next, n2.next), 0);
+    }
+    public static Node sumList(Node first, Node second){
+        //to add units, we have to traverse end of linked list and extract the digit in units place.
+        //to add tens , we have to traverse last but one position in the linked list and extract and sum.
+        // this is very inefficient, so we use stacks or nested calls. but problem with nested calls is we don't know size,
+        // so we have to first find out size of the linked lists and them match the samller list head node with 0's to bring them same size.
+        Node head, sum;
+        int firstCount=0, secondCount=0;
+        firstCount = nodesInLL(first);
+        secondCount = nodesInLL(second);
+        if(firstCount > secondCount){
+            second = fillZeroes(second, firstCount-secondCount);
+        } else {
+            first = fillZeroes(first, secondCount-firstCount);
+        }
+        head = recursiveSum(first, second, 0);
+        return  head;
+    }
+
 }
