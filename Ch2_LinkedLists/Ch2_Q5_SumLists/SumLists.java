@@ -54,15 +54,24 @@ public class SumLists {
         return count;
     }
 
-    public static Node recursiveSum(Node n1, Node n2, carry){
+    public class PartialSum{
+        Node node=new Node();
+        int carry=0;
+    }
+    public static PartialSum recursiveSum(Node n1, Node n2){
         int total =0, carry = 0;
-        Node sum;
+        PartialSum partialsum = new PartialSum();
         if(n1.next == null && n2.next == null){
             total = n1.value + n2.value;
-            carry = total /10;
+            PartialSum.carry = total /10;
+            PartialSum.node = new Node( total %10 );
+            insertBefore(PartialSum.node, PartialSum.carry);
+        } else {
+            total = n1.value + n2.value;
+            PartialSum.carry = total /10;
+            PartialSum.node = insertBefore(recursiveSum(n1.next, n2.next), (total %10 + recursiveSum(n1.next, n2.next).carry) );
         }
-        sum = new Node( recursiveSum(n1, n2, carry) );
-        sum.next = new Node (recursiveSum(n1.next, n2.next), 0);
+        return partialsum;
     }
     public static Node sumList(Node first, Node second){
         //to add units, we have to traverse end of linked list and extract the digit in units place.
@@ -78,7 +87,7 @@ public class SumLists {
         } else {
             first = fillZeroes(first, secondCount-firstCount);
         }
-        head = recursiveSum(first, second, 0);
+        head = recursiveSum(first, second);
         return  head;
     }
 
